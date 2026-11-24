@@ -1,0 +1,655 @@
+\ifdefined\XeTeXrevision
+  \IfFileExists{TS1cmr.fd}{\documentclass[11pt]{article}}
+    {\documentclass[11pt,UTF8,scheme=plain,fontset=fandol]{ctexart}}
+\else
+  \documentclass[11pt]{article}
+\fi
+\usepackage{amsmath,amssymb,amsthm,booktabs,hyperref}
+\usepackage[margin=1in]{geometry}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\diag}{diag}
+\newcommand{\vp}{v_p}
+\newcommand{\vg}{v_p^{\mathrm G}}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\R}{\mathbb R}
+% Replaced from the final audited static certificate when packaging.
+% BEGIN INSTANCE
+\newcommand{\LL}{50}
+\newcommand{\UU}{45}
+\newcommand{\ZZ}{40,40,40,41,43}
+\newcommand{\DD}{0,0,0,0,0,2,4,5,5,6,8,9,9,11}
+\newcommand{\hh}{15}
+\newcommand{\GateA}{50}
+\newcommand{\TT}{5}
+\newcommand{\JJ}{3}
+\newcommand{\BB}{9}
+\newcommand{\gateExp}{105}
+\newcommand{\finalR}{-7.867370}
+\newcommand{\finalC}{7.640135}
+\newcommand{\finalNet}{-0.227235}
+\newcommand{\cutoff}{9/200}
+\newcommand{\phaseBins}{32}
+% END INSTANCE
+\title{One of the six values \(\zeta(7),\zeta(9),\ldots,\zeta(17)\) is irrational}
+\author{[Author / GitHub ID]}
+\date{24 November 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+We give a computer-assisted proof that at least one of the six real
+Riemann zeta values \(\zeta(7),\zeta(9),\zeta(11),\zeta(13),\zeta(15),\zeta(17)\)
+is irrational. The method uses a growing determinant of fourth derivatives
+of a nested-pole kernel. The arithmetic estimate combines folded
+jet capacities and a periodic calculation at small primes. Non-vanishing
+on an infinite arithmetic progression of auxiliary primes follows from
+a confluent Vandermonde matrix and fixed binomial blocks. The accompanying
+static certificate and independent rational/Arb verifier specify and
+verify the numerical inequalities used in the argument.
+\end{abstract}
+
+\begin{theorem}
+At least one of \(\zeta(7),\zeta(9),\zeta(11),\zeta(13),\zeta(15),\zeta(17)\)
+is irrational.
+\end{theorem}
+
+Earlier fixed-window results include Zudilin's theorem on
+\(\zeta(5),\zeta(7),\zeta(9),\zeta(11)\) \cite{zudilin} and the
+seven-value result from \(\zeta(7)\) to \(\zeta(19)\) of Liu \cite{liu}.
+We use the growing-determinant strategy of \cite{liu}, with a different
+kernel and certificates. The parameters of the present proof are
+\[
+ \begin{gathered}
+ L=\LL,\quad U=\UU,\quad R=U+L,\quad h=\hh n,\\
+ (z_a)=(\ZZ),\qquad (d_b)=(\DD).
+ \end{gathered}
+ \tag{1}
+\]
+Here \(L,U,z_a,d_b\) are fixed integers, and \(n\) is the asymptotic index.
+The certificate uses \(\theta=h/(Ln)\). We reserve \(\mathcal H_n\) for
+the determinant matrix and \(K=2L\theta\) for the scaled rank budget.
+
+\section{Kernel and polynomial determinant}
+Write \(s=\min_a z_a\), \(c_n=(U+R)n/2+1\), and
+\[
+ a_b=(U+d_b)n+1,\qquad b_b=(R-d_b)n+1,\qquad
+ \ell_b=b_b-a_b.
+\]
+Define
+\[
+ R_n(t)=2(t+c_n)
+ \prod_{a=1}^5
+ \frac{\prod_{j=1}^{z_an}(t+j)(t+2c_n-j)}{((z_an)!)^2}
+ \prod_{b=0}^{13}\frac{\ell_b!}{\prod_{j=a_b}^{b_b}(t+j)} .
+ \tag{2}
+\]
+This rational function is odd under \(t\mapsto-2c_n-t\).
+Its zero order at each of \(-sn,\ldots,-1\) is at least five. No
+pole lies at those integers. The parameters satisfy
+\(\sum_b(L-2d_b)-2\sum_a z_a>4L\theta\). Thus the product of
+\(R_n(t)\) with any two basis polynomials below is \(O(t^{-2})\)
+at infinity, in fact with considerably greater decay.
+
+For an integer center put \(E_0=1\) and, for \(i\ge1\),
+\[
+ E_i(x)=\binom{x+i}{2i}+\binom{x+i-1}{2i}.
+\]
+These even polynomials have degree \(2i\), leading coefficient
+\(2/(2i)!\), and take integer values on \(\Z\).
+In the half-integral case one can instead use
+\(E_i(x)=\binom{x+i-1/2}{2i}\), with leading coefficient \(1/(2i)!\)
+and the same evenness on the half-integral lattice.
+For \(0\le i,j<h\) let
+\[
+ (\mathcal H_n(\boldsymbol\zeta))_{ij}
+ =\frac1{4!}\sum_{t=-sn}^{\infty}
+   (R_n(t)E_i(t+c_n)E_j(t+c_n))^{(4)}
+ \tag{3}
+\]
+where the sum runs over integers. If \(t=-k+w\) is at a pole,
+write the partial fractions of the product in (3) as
+\(\sum_{\ell}a_{k,\ell}w^{-\ell}\) plus a regular part.
+Differentiation and summation give a contribution
+\[
+ \sum_\ell \binom{\ell+3}{4}a_{k,\ell}
+       \bigl(\zeta(\ell+4)-H_{\ell+4}(k-sn-1)\bigr),
+ \quad H_j(M)=\sum_{v=1}^{M}v^{-j}.
+ \tag{4}
+\]
+Reflection sends the coefficient at \(k\) to
+\((-1)^{\ell+1}a_{k,\ell}\) at \(2c_n-k\). Thus even zeta orders
+cancel. The sum of all \(a_{k,1}\) is zero by decay at infinity,
+so the order-five zeta term also vanishes. The order-fourteen
+poles give only the six claimed odd orders. Replacing these values
+by independent indeterminates \(\mathbf X\) gives a matrix with
+affine entries. Let
+\(\det\mathcal H_n(\mathbf X)=\gamma_n P_n(\mathbf X)\), where
+\(P_n\) is a primitive integer polynomial and \(\gamma_n\) is its
+rational content (the sign can be fixed arbitrarily). For the zero
+polynomial set \(P_n=0\) and \(\gamma_n=1\). The degree of \(P_n\)
+is at most \(h\).
+
+\section{Arithmetic bounds}
+For a polynomial with rational coefficients we write \(\vg\)
+for the minimum of their \(p\)-adic valuations, with the value
+\(+\infty\) for zero. We use \(\vg(FG)=\vg(F)+\vg(G)\).
+The arithmetic cost is \(-\log|\gamma_n|\).
+
+\begin{lemma}[Taylor estimates]
+Let \(p\) be odd, \(p^2>2i\), and let \(x\) be on the appropriate
+integer or half-integer lattice. Writing \(E_i^{[r]}\) for a Taylor
+coefficient, one has
+\[
+ \vp(p^r E_i^{[r]}(x))\ge
+          \max\{0,r-\lfloor 2i/p\rfloor\}.
+ \tag{5}
+\]
+For every nonnegative integer \(q\), adding
+\(\max(\lfloor 2i/p\rfloor-q,0)\) to the left side gives a bound
+of at least \(\max(r-q,0)\).
+\end{lemma}
+\begin{proof}
+For integer \(A\), Vandermonde's identity expresses
+\(\binom{A+w}{d}\) as \(\sum_{j=0}^d\binom A{d-j}\binom wj\).
+The coefficient of \(w^r\) in \(\binom wj\) is \(s(j,r)/j!\),
+where \(s(j,r)\) is a signed Stirling number of the first kind.
+This gives valuation at least \(-\lfloor d/p\rfloor\) when
+\(p^2>d\). Also, for \(j\ge1\),
+\(\binom wj=(-1)^{j-1}(w/j)\prod_{k=1}^{j-1}(1-w/k)\).
+Its coefficient of \(w^r\) is a sum of products with \(r\)
+denominator factors, all at most \(j<p^2\), giving valuation at
+least \(-r\). Apply these two bounds to the integer binomial
+arguments in \(E_i\). For the last assertion use
+\(\max(0,r-d)+\max(d-q,0)\ge\max(0,r-q)\).
+\end{proof}
+
+\begin{lemma}[All prime powers and the very small prime range]
+There is a fixed \(M_0=O(n)\) such that
+\(D_{M_0}^{18}\mathcal H_n(\mathbf X)\) has integer coefficients,
+where \(D_m=\lcm(1,\ldots,m)\). Consequently the upper
+contribution to \(-\log|\gamma_n|/(nhL)\) from primes
+\(p\le\varepsilon n\) is at most \(18\varepsilon/L+o(1)\).
+\end{lemma}
+\begin{proof}
+Take \(M_0\) to dominate all block lengths, all nonzero distances
+from the poles to the factors, all harmonic cutoffs, and \(2h\).
+The numerator blocks divided by their length factorials are
+integer binomial polynomials at integral pole centers. The
+factorization used above shows that a Taylor coefficient of
+order \(r\) of any such binomial, or of the basis, has denominator
+dividing \(D_{M_0}^r\), with no restriction on \(p\).
+
+Fix \(P=p^e\). In a denominator block containing \(k\), the
+number of remaining indices congruent to \(k\bmod P\) is
+\(\lfloor(k-a_b)/P\rfloor+\lfloor(b_b-k)/P\rfloor\le
+\lfloor\ell_b/P\rfloor\). In a block outside \(k\), the count of
+congruent indices is at most \(\lfloor\ell_b/P\rfloor+1\).
+The terms of size \(\ell_b/P\) therefore cancel against the
+factorial normalization at every \(e\). For a numerator block
+the count in its consecutive interval differs from its length
+divided by \(P\) by at most one, and binomial integrality
+provides the nonnegative constant-coefficient valuation after
+its factorial normalization. This accounts explicitly for the
+cancellation of all terms of order \(n/P\).
+
+If \(m\) denominator blocks contain \(k\), the constant
+coefficient of the local inverse denominator has denominator
+dividing \(D_{M_0}^{14-m}\). Each additional Taylor order of
+its nonvanishing factors costs at most one more copy of
+\(D_{M_0}\), from expansion of \((u+w)^{-1}\) for \(u\ne 0\).
+The odd central factor is an integral polynomial and does not
+worsen the estimate. Hence the Laurent coefficient of order
+\(\ell\) in (4) costs at most \(D_{M_0}^{14-\ell}\).
+Multiplying by the harmonic term costs \(D_{M_0}^{\ell+4}\).
+Leibniz expansion of the determinant proves
+\(-\vg(\gamma_n)\le 18h\lfloor\log_p M_0\rfloor\).
+For \(p\le\sqrt{M_0}\) the contribution divided by \(nhL\) is
+at most \(18\sqrt{M_0}\log(M_0)/(nL)=o(1)\). For the remaining
+primes up to \(\varepsilon n\) the exponent is at most one,
+and the prime number theorem gives the claimed bound.
+\end{proof}
+
+\subsection{Local slot costs and reflection}
+We now work away from the very small prime range, so that
+\(p^2>M_0\). Pair the poles at \(k\ge c_n\) with their reflections,
+and let \(m\) be the order before any cancellation at the center.
+For a site let \(v\) be the valuation of the constant coefficient
+of the regularized kernel (including the factorial normalization).
+For a noncentral site let \(N_d,N_z\) count nonzero factors in
+the denominator and numerator whose distances to the site are
+multiples of \(p\), respectively. After removing the \(m\)
+zero denominator factors, the change of valuation of the
+coefficient of order \(d\) in the local regular factor is at
+least \(-d\) if there is a denominator alias. Without denominator
+aliases it is at least \(-\min(d,N_z)\): each vanishing numerator
+factor is linear. The factor \(2(t+c_n)\) can either be counted
+among these numerator factors or estimated as an integral
+polynomial. In the limiting count below the residue class on
+which it vanishes modulo \(p\) costs only \(O(1)\) slots per prime
+and ignoring that zero can only weaken the bound.
+
+Let \(r\) be the Taylor order falling on the product
+\(E_iE_j\). For each \(\ell\) with \(1\le\ell\le m-r\), the
+order in the regular factor is \(d=m-\ell-r\).
+For \(\ell\) odd the paired harmonic coefficient can have
+negative valuation from a multiple of \(p\) in either cutoff.
+For \(\ell\) even, only the difference of the two harmonics
+occurs. If their counts of multiples of \(p\) are equal, those
+summands cancel exactly. Let \(I_\ell\) be the resulting
+indicator for possible denominators. Therefore the
+coefficient of \(E_i^{[a]}E_j^{[b]}\), \(a+b=r\), in the
+paired form has Gauss valuation bounded below by the minimum
+of \(v-d'-(\ell+4)I_\ell\), with \(d'=d\) or
+\(\min(d,N_z)\) as above. After extracting the vectors
+\(p^a E_i^{[a]}\) and \(p^b E_j^{[b]}\), a valid cost is
+\[
+ C_r=\max\bigl(0,\max_{1\le\ell\le m-r}
+         (r-v+d'+(\ell+4)I_\ell)\bigr),
+ \qquad B_a=\max_{r\ge a}C_r .
+ \tag{6}
+\]
+Both \(B_a\) and \(B_b\) dominate \(C_{a+b}\).
+The unrefined cost is \(m-v+4\) if the right cutoff contains
+a multiple of \(p\), and \(m-v-1\) otherwise, cut off below by zero.
+
+\subsection{Folded Cauchy--Binet}
+Let \(Y_{i,(k,a)}=p^a E_i^{[a]}(c_n-k)\).
+The preceding construction expresses the matrix as \(Y W Y^T\)
+with block-diagonal \(W\). In each block an entry indexed by
+\(a,b\) has Gauss valuation at least \(-(B_a+B_b)/2\).
+Equivalently one can factor these weights in a ramified extension,
+normalizing \(v_p(p)=1\). The coefficient inequalities over the
+rational ground field are unchanged.
+
+Group centers modulo \(p\) up to sign. If \(x\) is congruent to
+a chosen representative \(z\) on the appropriate lattice, then
+\[
+ p^a E_i^{[a]}(x)=\sum_{j\ge a}\binom ja
+       \bigl((x-z)/p\bigr)^{j-a}p^jE_i^{[j]}(z).
+ \tag{7}
+\]
+Changing \(x\) to \(-x\) supplies only the sign \((-1)^a\).
+Multiply row \(i\) of \(Y\) by
+\(p^{(\lfloor2i/p\rfloor-q)_+}\). By (5) the degree-\(j\)
+vector in (7) now has valuation at least \((j-q)_+\).
+Any nonzero determinant of selected columns must choose
+distinct such degrees within each residue class. Thus taking
+\(s'\) columns of one class costs at most the sum of its
+largest \(s'\) weights minus \(2\sum_{j<s'}(j-q)_+\) in the
+two-sided determinant bound. More explicitly, each term of
+the two Cauchy--Binet expansions uses two sets of \(h\)
+columns. The valuation bound is the average of the costs of
+the two sets together with the common row penalty. Taking the
+largest possible cost on each side proves the same generous
+bound for the Gauss valuation of the determinant.
+For a class whose weights in decreasing order are \(B_j\),
+the incremental costs are
+\(B_j-2(j-q)_+\), indexed from \(j=0\).
+Include the row penalty \(2\sum_{i<h}(\lfloor2i/p\rfloor-q)_+\).
+One may also use the unfolded bound directly from (5), or
+repeat the maximal \(B_j\) in a class to obtain a simpler folded
+bound. For any set of nonnegative incremental costs the sum of
+the largest \(h\) equals the sum, over positive integer levels,
+of the number of increments at least that level capped at \(h\).
+
+\subsection{Arithmetic integrals and stability at finite endpoints}
+Use the coordinates \(x=2p/n\), \(u=2k/n\), and put \(N_0=2L\)
+and \(K=N_0\theta\). The prime coordinate stored in the
+certificate is \(x/N_0=p/(nL)\).
+The limiting pole intervals are
+\([2(U+d_b),2(R-d_b)]\), and the zero intervals are
+\([0,2z_a]\), \([2(U+R-z_a),2(U+R)]\).
+Their factorial lengths are the interval lengths in these
+coordinates. At a given \(u\) counts of congruent sites in an
+interval \([a,b]\) are
+\(\lfloor(b-u)/x\rfloor-\lfloor(a-u)/x\rfloor\) away from
+endpoints. The two harmonic cutoffs are
+\(\lfloor(u-2s)/x\rfloor\) and
+\(\lfloor(2(U+R)-u-2s)/x\rfloor\).
+Subtract the factorial counts with the appropriate signs to
+compute \(v\) in (6). On the folded axis
+\(z=2\operatorname{dist}(u-(U+R),x\Z)\), the residue-class
+interval is \(0\le z\le x\). A width on this axis is divided
+by two to obtain residue-class capacity in the \(u\) scale.
+At each level cap the capacity at \(K\). The continuous row
+penalty is \(\sum_{j=q+1}^{\lfloor 2K/x\rfloor}(2K-jx)\).
+Thus integration in \(x\) followed by division by \(N_0K\)
+gives the contribution to the normalized arithmetic budget.
+
+For a fixed cutoff \(p/n\ge\varepsilon>0\), only finitely
+many lines in \(u\) and their folded images are relevant.
+Their coefficients are fixed integers. The exact count
+discontinuities and all intersections are affine.
+The verifier checks ordering on each open rational slab by
+signs at both endpoints of the slab. Equality at an endpoint
+is permitted. Factorial walls and changes in \(\lfloor2K/x\rfloor\)
+are also checked. For any certified \(q\) all direct
+capacities are affine in a slab. The min operation at \(K\)
+is integrated by splitting at the exact rational saturation
+point. Different bounds can be chosen on subdivisions of a
+slab. This construction justifies the chosen bounds without
+requiring that the optimizing \(q\) be constant on a geometric
+slab. The separate audit also computes the lower envelope by
+solving the affine crossing equations and checks three interior
+rational points per geometric slab.
+
+For the profile (1) we have
+\(R-s\ge\max(L,\max_a z_a,2h/n)\). If \(p>(R-s)n\),
+the harmonic factors, pole-to-pole differences, and the Taylor
+coefficients of the factorial-normalized binomial polynomials
+are \(p\)-integral. The cost bound vanishes beyond this endpoint.
+
+Here is the prelimit justification. For \(x\ge 2\varepsilon\)
+the number of translated endpoints and possible folds is
+bounded in terms of the fixed profile and \(\varepsilon\).
+In the finite lattice each endpoint, center, or harmonic cut
+is displaced in the \(u\) scale by \(O(1/n)\). Exclude primes
+whose \(x\) lies within \(O(1/n)\) of a fixed factorial wall
+or affine intersection. There are \(O_\varepsilon(1)\) such
+integer prime candidates. The previous denominator lemma bounds
+their total normalized effect by \(O_\varepsilon(\log n/n)\).
+At every remaining prime, the displaced cutoff functions agree
+with the limiting functions outside \(O_\varepsilon(1)\)
+intervals of length \(O(1/n)\). Each interval contains
+\(O_\varepsilon(1)\) lattice points. After folding, a residue
+profile can change only at the images of these points or at the
+finitely many corresponding shifted residue endpoints. Each
+class has \(O_\varepsilon(1)\) sites, and each slot weight is
+bounded by \(18\). Likewise an interval of folded width \(w\)
+has \(nw/4+O(1)\) residue classes. Thus every level capacity
+and its capped value have error \(O_\varepsilon(1)\) in the
+unscaled lattice. The finite row penalty is the sum of a
+bounded number of terms of the form
+\((h-\lceil jp/2\rceil)_+\), and has the same error.
+The resulting integrated error after division by \(nhL\)
+is \(o(1)\) by the prime number theorem.
+This argument gives an asymptotic bound, and allows a positive
+finite endpoint error at an individual prime.
+Finally the denominator lemma permits \(\varepsilon\downarrow0\).
+
+\subsection{Periodic small prime certificate}
+For small \(x\) we use a bound valid for all \(x\) in the indicated
+small-prime interval. The unrefined weight at any site is
+at most \(B=4+\#\text{pole factors}-\#\text{zero factors}-
+\text{factorial valuation}\). Use \(B_+=\max(B,0)\).
+Write \(1/x=k+\tau\) with \(0\le\tau<1\), and use residue
+coordinate \(w\) modulo one, measured relative to the center.
+The count from a signed interval with integer endpoints \(a,b\)
+relative to that center is
+\[
+  \pm\big(\lfloor b\tau-w\rfloor-\lfloor a\tau-w\rfloor
+                         -\lfloor(b-a)\tau\rfloor\big).
+ \tag{8}
+\]
+The integer parts involving \(k\) cancel. By reflection the
+whole residue-circle average equals the folded average.
+Let \(F(\tau)=\int_0^1 B_+\,dw\) and
+\(G(\tau)=\int_0^1\sum_{v=0}^{B_+-1}\lfloor v/2\rfloor\,dw\).
+The affine wall equations in \(w,\tau\) certify piecewise
+affine formulas for both quantities.
+
+Write \(\eta=\{2K/x\}\), \(m=\lfloor2K/x\rfloor\).
+For any integer \(0\le u_0\le m\) take \(q=m-u_0\).
+Giving each residue class unlimited slots with the same coarse
+weight and dropping the caps yields, per row, the upper bound
+\[
+ F(\tau)+\frac{x}{2K}
+   \left(G(\tau)+(1-u_0)F(\tau)+u_0(u_0-1)
+                          +\eta(2u_0-F(\tau))\right).
+ \tag{9}
+\]
+Indeed the layer \(j\) has at most
+\(q+1+\lfloor(B_+-j)/2\rfloor\) slots in each class, and one
+then adds the row penalty. Since \(2K\) is integral for (1),
+\(\eta=\{2K\tau\}\). The verifier checks each choice of \(u_0\)
+against the maximum allowed by the cutoff and checks its quadratic
+correction in (9). Substituting \(x=(k+\tau)^{-1}\), the
+integrals of the affine and quadratic pieces over the first
+45 periods use rational functions and logarithms. For later
+periods take \(u_0=0\) and bound the correction above by \(F+G\).
+If \(\overline F,\overline G\) are period integrals the tail is
+bounded by \(\overline F/44+(\overline F+\overline G)/(4K\cdot44^2)\)
+before division by \(N_0\). This uses integral comparison for
+the inverse-square and inverse-cube series.
+
+\section{Analytic certificate}
+Let \(L_n=Ln\) and take the contour
+\(\sigma_0=-\lfloor c L_n\rfloor-1/2\) for the rational \(c\)
+in the certificate. The residues of
+\((\pi\cot\pi t)^{(4)}(R_n P)(t)/4!\) at integers are
+\((R_nP)^{(4)}(t)/4!\).
+The rational kernel has no poles to the right of the contour.
+The omitted integers between \(-sn\) and the contour give zero
+because of the fivefold zeros. Closing the contour to the right
+on half-integer vertical sides gives (3), up to an orientation
+sign which is immaterial for the determinant modulus. The
+horizontal edges vanish by exponential decay of the fourth
+cotangent derivative. The right vertical edge vanishes by
+rational decay and the integrable exponential bound in the
+imaginary direction. For large positive imaginary part, the expression
+\(\cot(\pi t)=i(e^{2\pi it}+1)/(e^{2\pi it}-1)\)
+has a convergent geometric expansion in \(e^{2\pi it}\).
+The fourth derivative kills the constant and is bounded by a
+constant times \(e^{-2\pi\Im t}\). Conjugation gives the
+bound in the lower half-plane. On a half-integer vertical line
+the remaining bounded imaginary range stays a fixed distance
+from the poles, uniformly by periodicity.
+Thus the contour weight has magnitude
+bounded by a fixed constant times \(|R_n(t)|e^{-2\pi|\Im t|}\).
+
+For \(y=|\Im t|/L_n\) and \(\delta=(U+R)/(2L)-c\), the scalar
+phase \(\phi_c(y)\) is obtained by summing
+\[
+ \int_a^b\log|u-c+iy|\,du-(b-a)\log(b-a)+(b-a)
+ \tag{10}
+\]
+over the normalized zero intervals with sign \(+1\) and pole
+intervals with sign \(-1\), and subtracting \(2\pi y\).
+Stirling's estimate gives the normalization term. The
+half-integer displacement gives a uniform \(O(\log L_n)\)
+error in \(\log|R_n|\) on \(0\le y\le4\).
+For completeness, on each side of \(u=c\) the logarithm is
+monotone. Upper and lower Riemann sums outside the one or two
+mesh cells nearest \(c\) differ only by endpoint terms of size
+\(O(\log L_n)\) after multiplication by \(L_n\).
+The exceptional cells have integral magnitude
+\(O(\log L_n/L_n)\) and the half-integer contour keeps their
+sampled logarithms above \(-O(\log L_n)\).
+Shifting the center by \(O(1/L_n)\) or comparing the two
+adjacent endpoint cells leaves the same bound.
+The pole intervals stay a positive distance to the right of
+\(c\). Formula (10) is evaluated via
+\(X(d,y)=\frac d2\log(d^2+y^2)-y\arctan(y/d)\) for \(d>0\),
+using the signed endpoints and the corresponding linear
+\(\pi y/2\) contributions. The linear endpoint term from the
+logarithmic antiderivative cancels the \(+(b-a)\) in (10).
+
+\begin{lemma}[Discrete root polynomials]
+Suppose a row band has positive rational weights \(w_a\)
+summing to one, with real nonnegative atoms \(a\).
+Write \(\delta_n=(c_n+\sigma_0)/L_n\) and
+\[
+ B_{a,n}(z)=\big(z-(\delta_n+ia)^2\big)\big(z-(\delta_n-ia)^2\big),
+ \qquad
+ Q_i(z)=z^{\,i-2\sum_a k_a}\prod_a B_{a,n}(z)^{k_a},
+ \quad k_a=\lfloor iw_a/2\rfloor .
+ \tag{11}
+\]
+The row norm at exponential scale is bounded above by the
+continuous phase
+\[
+ \phi_c(y)+\frac{t}{2}\sum_a w_a\log M_a(y),
+ \quad
+ M_a(y)=(y^2-a^2)^2((y+a)^2+4\delta^2)((y-a)^2+4\delta^2),
+ \tag{12}
+\]
+with a displacement \(t=i/L_n+O(1/L_n)\) and uniform
+\(O(\log L_n/L_n)\) error in the upper comparison.
+\end{lemma}
+\begin{proof}
+On the contour \(z=(\delta_n+iy)^2\) one has
+\(|B_{a,n}(z)|^2=M_a(y)\) with \(\delta_n\) in place of
+\(\delta\). The two strictly positive quadratic factors change
+by a factor \(1+O(1/L_n)\) uniformly. The vanishing factor is
+unchanged. Let \(M\) be a common denominator of the weights
+in the band. With \(j=\lfloor i/(2M)\rfloor\) the integer
+\(jMw_a\) is at most \(k_a\), and the excess factors and the
+fixed-point remainder in (11) have total degree bounded in
+terms of \(M\) alone. On \(0\le y\le4\) their modulus is
+bounded uniformly from above. Use \(t=2Mj/L_n\) in (12).
+This proves the stated one-sided comparison even at the
+zeros. A two-sided unregularized comparison is unavailable
+at a root with a changed multiplicity. Off neighborhoods
+where \(M_a(y)<L_n^{-A}\), the floor-rounded expression
+itself differs by \(O(\log L_n/L_n)\) for any fixed \(A>0\).
+For the upper estimate over the entire contour the
+whole-block comparison just proved is stronger. Only a
+bounded number of rows per band can cross an endpoint because
+of the displacement in \(t\). A uniform coarse bound of
+\(O(L_n)\) per exceptional row follows from bounded atoms
+and the same decreasing tail, so they do not affect the limit.
+\end{proof}
+
+The logarithmic moment bound for a row is at most the supremum
+of (12). On any band the supremum of affine functions of
+\(t\) is convex, so the integral over each band is bounded by
+the trapezoid of the two certified endpoint suprema.
+The verifier bounds the function on \([0,4]\) with Arb
+intervals, using endpoint bounds for factors which vanish.
+For \(y\ge4\), numerator derivative contributions are bounded
+by \(11/y\), denominators have a nonpositive derivative
+contribution, and the derivatives of the root terms are
+bounded by \(5\theta/y\) (since \(2\sum_a z_a / L = 408/50 < 11\)
+and \(4/(1 - (7/20)^2) < 5\), as all \(a\le7/5\)). Thus the derivative
+of the upper tail phase is at most
+\(-2\pi+(11+5\theta)/y<0\), bounded away from zero.
+The same tail domination applies to the finite products,
+with \(O(1/L_n)\) adjustments to the exponents, so the
+tail integral satisfies the moment bound as well.
+
+For the monic even basis \(Q_i((t+c_n)^2/L_n^2)\), the
+Heine--Andr\'eief identity expresses the determinant as an
+integral of a squared evaluation determinant against the
+complex contour weight. Taking absolute values bounds it by
+the corresponding integral with the squared modulus and
+the positive modulus of the weight. By the same identity
+this is a positive Gram determinant. Hadamard bounds it by
+the product of the diagonal moment integrals.
+Changing back to \(E_i\) multiplies the bound by
+\(\prod_i(\operatorname{lc}(E_i)L_n^{2i})^2\).
+Its log divided by \(nhL\) tends to
+\(\theta(3-2\log(2\theta))\) by Stirling's formula. The
+static certificate combines this term with the
+\(\phaseBins\) verified phase bands.
+
+\section{The confluent auxiliary-prime gate}
+The following parameters are certified:
+\(T=\TT\), \(J=\JJ\), \(A=\GateA\), \(B=\BB\),
+where \(A=R-s-T\), \(h=JTn\), \(s+T\le U\),
+\(s+2T\le L\), and \(B>2(J-1)\).
+For \(p=An+1\) prime the rightmost \(Tn\) poles have exactly one
+multiple of \(p\) in their right harmonic cutoff. There is no
+other singular cutoff: \(p>Ln\), the left mirrored pole
+is outside this tail, and the largest cutoff is less than \(2p\).
+The factorials and pole-to-pole differences are units.
+At these tail sites \(k-p\) runs through \(sn+1,\ldots,(s+T)n\).
+The only numerator roots among nonzero multiples of \(p\)
+at these sites thus come from the left blocks. The inequality
+\(s+2T\le L\) rules out a multiple from the right blocks:
+the maximum right-root distance is \((U+T)n-1<p\).
+The central factor is a unit at the tail sites.
+
+Let \(q\) be the left-root count at a tail site, and \(m\)
+the local pole order. The chosen offsets match the jumps at
+\(d=s+T-z_a\) for \(s<z_a<s+T\). The permanent hits \(z_a\ge s+T\)
+are accounted for at offset zero. These equalities, verified
+in the certificate, give \(m-q=B-4\).
+The regular local numerator can therefore be written
+\((w-p)^q U_k(w)\) with \(U_k(0)\) a unit. In (4) use the
+geometric series \((1-w/p)^{-5}\) to sum the singular
+summands \(p^{-\ell-4}\binom{\ell+3}{4}\).
+For Taylor orders \(a,b\) the entry after multiplication by
+\(p^{B-a-b}\) is congruent to
+\[
+ (-1)^{q+1}U_k(0)
+       \binom{m+3-q-a-b}{m-1-a-b}\pmod p,
+ \tag{13}
+\]
+with zero when \(a+b\ge m\). Terms coming from higher
+coefficients of \(U_k\) acquire extra factors of \(p\).
+The regular harmonics and zeta coordinates are integral.
+The \(J\)-by-\(J\) binomial blocks in (13) have nonzero
+integer determinants, explicitly listed in the certificate.
+
+Form \(V\) whose columns are the first \(J\) Taylor vectors at
+each of the \(Tn\) tail sites. It is square of size \(h\) and
+invertible modulo \(p\). Indeed the squares of the \(x_k=c_n-k\)
+are distinct and nonzero modulo \(p\), since \(2|x_k|<p\)
+throughout the tail and the absolute values are distinct.
+The change \(x\mapsto x^2\) is locally invertible at these
+points. Thus the evaluation in Taylor jets of even polynomials
+is the confluent interpolation isomorphism on polynomials of
+degree \(<h\) in \(x^2\). The basis leading coefficients are
+units since \(p>2(h-1)\).
+
+Conjugate \(\mathcal H_n\) by \(V^{-1},V^{-T}\), and scale its
+entry in retained jet indices \(i,j\in\{0,\ldots,J-1\}\) by
+\(p^{B-i-j}\).
+If the two contributing jet orders are both \(<J\), their
+vectors are coordinate vectors after conjugation, and only
+the same-site blocks from (13) remain. If \(a\ge J\) but \(b<J\),
+the second vector fixes \(j=b\). The first yields at least
+\(a-i\ge1\) extra powers of \(p\). The case \(a<J,b\ge J\) is
+symmetric with \(b-j\ge1\). If both are at least \(J\),
+their excess is at least two. Regular matrix coefficients
+remain divisible by \(p\) after scaling, since \(B-i-j>0\).
+These arguments are valid for every specialization of the
+zeta indeterminates integral at \(p\). Except for the finitely
+many primes dividing the finitely many binomial determinants,
+the reduced matrix is invertible. In particular
+\[
+ v_p(\det\mathcal H_n(\mathbf X))=-\gateExp n
+ \tag{14}
+\]
+at all such specializations. Dirichlet's theorem supplies
+infinitely many primes \(p\equiv1\bmod A\).
+
+\section{Certificate and conclusion}
+The arithmetic and analytic estimates have the common
+normalization \(nhL\). With the cutoff \(\cutoff\) in the
+prime coordinate \(p/(nL)\), the certificate proves the
+two upper bounds
+\[
+ \limsup\frac{\log|\det\mathcal H_n(\boldsymbol\zeta)|}{nhL}
+       < \finalR,\qquad
+ \limsup\frac{-\log|\gamma_n|}{nhL}<\finalC .
+\]
+The combined upper bound is at most \(\finalNet<0\), with
+the displayed decimal bounds rounded outward.
+If all six zeta values were rational, choose their common
+denominator \(Q\). The numbers \(Q^hP_n(\boldsymbol\zeta)\)
+would be integers. By (14) they would be nonzero for infinitely
+many \(n\), after discarding primes dividing \(Q\). The
+negative bound and \(h=O(n)\) make their absolute values
+tend to zero. This is impossible.
+
+The static data contain each phase cap, root atom and rational
+weight, the middle/high-prime slab partition and selected
+branches, the periodic small-prime tiles, and the local gate
+blocks. Run \texttt{python verify\_zeta6\_certificate.py}
+with \texttt{python-flint}. This verifier uses only rational
+and Arb calculations. It does not need the optimizer. For
+audit and Lean planning see the separate reproduction notes.
+
+\begin{thebibliography}{9}
+\bibitem{liu} J. Liu, \emph{At least one of \(\zeta(7),\ldots,\zeta(19)\)
+is irrational}, 2026. \url{https://github.com/ALexxxxxLiu/odd-zeta-seven-lean}.
+\bibitem{zudilin} W. Zudilin, \emph{One of the numbers \(\zeta(5),\zeta(7),
+\zeta(9),\zeta(11)\) is irrational}, Russian Math. Surveys 56 (2001), 774--776.
+\bibitem{flsz} S. Fischler, L. Lai, J. Sprang, W. Zudilin,
+\emph{Many more odd zeta values are irrational}, arXiv:2611.16156 (2026).
+\end{thebibliography}
+\end{document}

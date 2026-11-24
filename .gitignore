@@ -1,0 +1,32 @@
+# Lean 4 / Lake build caches & fetched packages
+.lake/
+lean/.lake/
+lean/PNTDependency/.lake/
+**/build/
+*.olean
+*.ilean
+*.olean.private
+*.olean.server
+
+# Python caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# LaTeX intermediates
+*.aux
+*.log
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+
+# Temporary audit replay & scratch outputs
+wall-replay/
+wall-replay-check/
+scratch/
+
+# Internal working notes (excluded from public release)
+notes/

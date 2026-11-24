@@ -1,0 +1,51 @@
+Lean 4 移植蓝图  ·  ζ(7), ζ(9), ζ(11), ζ(13), ζ(15), ζ(17)
+2026-11-24
+
+上游参考
+https://github.com/ALexxxxxLiu/odd-zeta-seven-lean
+本地审阅版本 7a7e3a2895c468306d28ba584558aed6decf45aa。
+目标声明使用 Mathlib 的 riemannZeta，结尾只允许 propext、Classical.choice、Quot.sound。
+
+1. SixFunctional / SixIdentity
+   参照 EvenBasis、H158Functional、H158JetFunctional、H158SevenIdentity。
+   建立 14 层极点、五个镜像零点块和 E_i 基。证明四阶导数部分分式恒等式、
+   偶次消失、单留数总和为零，以及原始整系数多项式的总次数 ≤ h。
+   Gamma 常数、18 次 LCM 清分母和新端点须在新核下重证。
+
+2. SixTaylor / SixFolded
+   参照 H158FoldedAssembly、H158ArithmeticAssembly。
+   用 Stirling 数和截断乘积证明 p^2 > 2i 的两个 Taylor 界。
+   在整数化的赋值不等式中处理双 Cauchy–Binet 半幂，可将不等式乘二，
+   避免把分歧扩张作为新的基础依赖。再证反射折叠、同余簇内不同 jet 阶
+   及排序后容量上界。这里是主要新增代数工作。
+
+3. SixWalls / SixPrimeRate
+   参照 H158HighCellsCertified、H158PrimeProfileRate、
+   H158MiddlePrimeRate、H158ThreeBandAssembly 和 PNTDependency。
+   把 JSON 来自有理数的端点和分支选择预处理成 Lean 数据。Slab 检查只做
+   仿射端点符号、阶乘 floor 常数和边界覆盖。最优分支的比较不进入证明。
+   小素数 periodic 块重建 F、G 和二次项，复用 RationalLogBounds 证明积分
+   的定向区间。对有限端点保留 O_ε(1) 的每素数误差证明，然后先 n→∞，
+   再 ε↓0。PNT 权重使用 log p，归一化统一为 n h L。
+
+4. SixPhase / SixDetBound
+   参照 H158BasisIntegralBound、H158BasisNormalizationRate、
+   H158IntegralDetBound、H158AnalyticCertified、RationalArctanBounds。
+   先移植半整数围道与正模 Gram/Hadamard 桥接。用完整有理根权块处理取整，
+   把每一带的两端上界转成有理区间子盒。Arb 负责生成候选盒，Lean 内由
+   log、arctan、π 的有理上下界重验。若穿过根，切换为因子绝对值上界。
+   低于 −0.10 的总余量允许使用较松的内部区间，减少内核计算量。
+   围道与根块误差是主要新增分析工作。
+
+5. SixConfluentGate
+   参照 GateVandermonde、H158GateAssembly。
+   新证同一平方节点的 J=3 重 Hermite 插值。常数块用精确整数行列式。
+   四类 Taylor 项按 retained/high 分成 (low,low)、(high,low)、
+   (low,high)、(high,high)。后面三类分别多出至少 1、1、2 个 p。
+   证明对 p=50n+1 的一般非消失，显式丢弃固定坏素数及假设关系的分母素数。
+   有限模 p 数据可作回归，Dirichlet 定理负责无穷族。
+
+6. SixIrrational / AxiomAudit
+   参照 H158SevenIrrational 和 AxiomAudit，复用最终的整数趋零反证结构。
+   汇总严格解析上界、算术上界、总次数线性界及无穷非消失。
+   以 #print axioms 和独立构建审计最终六值声明。Python 数值回放不充当 Lean 证明。
