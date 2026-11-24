@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this formalization or certificate, please cite it using the metadata below."
+title: "One of the six values ζ(7), ζ(9), ..., ζ(17) is irrational (Lean 4 Formalization & Certificate)"
+type: software
+authors:
+  - name: "janahesse580-star"
+version: "v1.0.0"
+date-released: "2026-11-24"
+repository-code: "https://github.com/janahesse580-star/odd-zeta-six-lean"
+doi: "10.5281/zenodo.24493267"

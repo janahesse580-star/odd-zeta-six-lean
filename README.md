@@ -1,6 +1,6 @@
 # One of the Six Values $\zeta(7), \zeta(9), \zeta(11), \zeta(13), \zeta(15), \zeta(17)$ Is Irrational
 
-[![Verify Proof](https://github.com/janahesse580-star/odd-zeta-six-lean/actions/workflows/verify.yml/badge.svg)](https://github.com/janahesse580-star/odd-zeta-six-lean/actions/workflows/verify.yml)
+[![Verify Proof](https://github.com/janahesse580-star/odd-zeta-six-lean/actions/workflows/verify.yml/badge.svg)](https://github.com/janahesse580-star/odd-zeta-six-lean/actions/workflows/verify.yml) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24493267.svg)](https://doi.org/10.5281/zenodo.24493267)
 
 **Machine-checked Lean 4 formalization**, LaTeX manuscript, static rational certificate, and independent Python/FLINT/Arb verifier proving unconditionally that at least one of the six odd Riemann zeta values $\zeta(7), \zeta(9), \zeta(11), \zeta(13), \zeta(15), \zeta(17)$ is irrational.
 
@@ -140,3 +140,19 @@ python audit/audit_zeta6_walls.py --winner --out /tmp/wall-replay-check
 
 * **Lean 4 形式化闭环**（`lean/OddZetaSix/`）：共 48 个文件、26,303 行、2,733 条声明（2,211 条定理），**零 `sorry`、零 `native_decide`、零自定义公理**；最终主定理 `OddZetaSix.exists_irrational_riemannZeta_seven_to_seventeen` 直接基于 Mathlib 标准 `riemannZeta` 与 `Irrational`，`#print axioms` 仅依赖 `[propext, Classical.choice, Quot.sound]`。在核轮廓 `local50-45-209` 下，内核纯有理证书严格证出算术上界 `C = 194/25 = 7.76`、解析上界 `R = -779/100 = -7.79`，净上界 `-3/100 < 0`。
 * **高精度静态证书轨道**（`zeta6_certificate.json` + `verify_zeta6_certificate.py`）：在同一核轮廓 `local50-45-209` 下使用精确有理算术与 144-bit `flint.arb` 区间算术证出 `R <= -7.867370`、`C <= 7.640135`，净上界 `<= -0.227235 < -1/5`。
+
+## Citation
+
+If you use this formalization or certificate, cite the archived v1.0.0 release.
+
+```bibtex
+@misc{janahesse580star2026oddzeta,
+  author       = {{janahesse580-star}},
+  title        = {One of the six values ζ(7), ζ(9), ..., ζ(17) is irrational ({Lean 4 Formalization \& Certificate})},
+  year         = {2026},
+  howpublished = {Zenodo},
+  version      = {v1.0.0},
+  doi          = {10.5281/zenodo.24493267},
+  url          = {https://github.com/janahesse580-star/odd-zeta-six-lean/releases/tag/v1.0.0}
+}
+```
