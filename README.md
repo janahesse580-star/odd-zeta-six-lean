@@ -2,6 +2,8 @@
 
 [![Verify Proof](https://github.com/janahesse580-star/odd-zeta-six-lean/actions/workflows/verify.yml/badge.svg)](https://github.com/janahesse580-star/odd-zeta-six-lean/actions/workflows/verify.yml) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24493267.svg)](https://doi.org/10.5281/zenodo.24493267)
 
+> **Update (Four-Term Breakthrough):** This formalization has been strengthened to prove that at least one of the four odd zeta values $\zeta(7), \zeta(9), \zeta(11), \zeta(13)$ is irrational under pure standard axioms — see [`odd-zeta-four-lean`](https://github.com/janahesse580-star/odd-zeta-four-lean) (Zenodo Concept DOI: [`10.5281/zenodo.24554179`](https://doi.org/10.5281/zenodo.24554179)).
+
 **Machine-checked Lean 4 formalization**, LaTeX manuscript, static rational certificate, and independent Python/FLINT/Arb verifier proving unconditionally that at least one of the six odd Riemann zeta values $\zeta(7), \zeta(9), \zeta(11), \zeta(13), \zeta(15), \zeta(17)$ is irrational.
 
 ## Main Result
